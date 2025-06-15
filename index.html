@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孙晓鹏 - 设计师作品集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --color-1: #FF61D8;
+            --color-2: #6B4CF5;
+            --color-3: #4CC9F5;
+            --color-4: #F55555;
+            --color-5: #33D5B5;
+            --text-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-bg-dark: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: #000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+        }
+
+        #home::before {
+            background: linear-gradient(45deg, 
+                rgba(255, 97, 216, 0.7), 
+                rgba(107, 76, 245, 0.7), 
+                rgba(76, 201, 245, 0.7));
+            opacity: 1;
+        }
+
+        #portfolio::before {
+            background: linear-gradient(45deg,
+                rgba(76, 201, 245, 0.7),
+                rgba(245, 85, 85, 0.7),
+                rgba(255, 97, 216, 0.7));
+        }
+
+        #about::before {
+            background: linear-gradient(45deg,
+                rgba(107, 76, 245, 0.7),
+                rgba(51, 213, 181, 0.7),
+                rgba(76, 201, 245, 0.7));
+        }
+
+        .page.active::before {
+            opacity: 1;
+        }
+
+        #home {
+            background: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4') center/cover no-repeat fixed;
+        }
+
+        #portfolio {
+            background: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4') center/cover no-repeat fixed;
+            position: relative;
+        }
+
+        #portfolio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg,
+                rgba(76, 201, 245, 0.7),
+                rgba(245, 85, 85, 0.7),
+                rgba(255, 97, 216, 0.7));
+            z-index: 1;
+        }
+
+        #about {
+            background: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4') center/cover no-repeat fixed;
+            filter: hue-rotate(90deg);
+        }
+
+        .home-content, .portfolio-grid, .about-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            mix-blend-mode: difference;
+        }
+
+        .logo-subtitle {
+            position: fixed;
+            top: 5rem;
+            left: 2rem;
+            z-index: 1000;
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-color);
+            opacity: 0.9;
+            max-width: 200px;
+            line-height: 1.4;
+            mix-blend-mode: difference;
+        }
+
+        .nav {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--glass-bg-dark);
+            transform: translateY(-2px);
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .welcome-text {
+            font-size: 5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--color-1), var(--color-2), var(--color-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s ease infinite;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .portfolio-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            background: rgb(0, 15, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 30px rgba(0, 255, 0, 0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .portfolio-item::before {
+            display: none;
+        }
+
+        .portfolio-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .portfolio-item img {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.3));
+            z-index: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05) rotate(2deg);
+            filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.5));
+        }
+
+        .portfolio-content {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 1.2rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .portfolio-item:hover .portfolio-content {
+            transform: translateY(0);
+        }
+
+        .portfolio-content h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-content p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .portfolio-item.has-video .portfolio-content {
+            transform: translateY(0);
+            opacity: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.6));
+            backdrop-filter: blur(5px);
+        }
+
+        .portfolio-item.has-video:hover .portfolio-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section-title {
+            position: relative;
+            z-index: 2;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 3rem 0;
+            background: linear-gradient(45deg, var(--color-3), var(--color-4), var(--color-5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .skill-item {
+            padding: 2rem;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--color-1), var(--color-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 3rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .logo-subtitle {
+                display: none;
+            }
+        }
+    </style>
+    <style>
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 2rem 0 1.5rem 0;
+            background: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4') center/cover no-repeat fixed;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1;
+        }
+        .footer p, .footer a, .footer-phone {
+            position: relative;
+            z-index: 2;
+        }
+        .footer a {
+            color: var(--color-3);
+            text-decoration: underline;
+        }
+        .footer a:hover {
+            color: var(--color-1);
+        }
+        .footer-phone {
+            color: var(--color-3);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+    </style>
+    <script>
+        // 颜色主题配置
+        const colorThemes = [
+            // 紫色系
+            ['#FF61D8', '#6B4CF5', '#4CC9F5', '#F55555', '#33D5B5'],
+            // 蓝色系
+            ['#0066FF', '#4DCCFF', '#00FF99', '#3399FF', '#66FFE6'],
+            // 绿色系
+            ['#00FF99', '#33CC33', '#66FF66', '#99FF99', '#CCFFCC'],
+            // 红色系
+            ['#FF0066', '#FF3366', '#FF6666', '#FF9966', '#FFCC66'],
+            // 橙色系
+            ['#FF6600', '#FF9933', '#FFCC00', '#FFFF33', '#FFFF66'],
+            // 彩虹系
+            ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF'],
+            // 海洋系
+            ['#006994', '#0099CC', '#00CCFF', '#33CCCC', '#66FFCC'],
+            // 霓虹系
+            ['#FF1177', '#FF44AA', '#FF99CC', '#FF22BB', '#FF88EE']
+        ];
+
+        // 在页面加载时随机选择一个主题
+        function initRandomTheme() {
+            const randomTheme = colorThemes[Math.floor(Math.random() * colorThemes.length)];
+            const root = document.documentElement;
+            
+            // 设置CSS变量
+            root.style.setProperty('--color-1', randomTheme[0]);
+            root.style.setProperty('--color-2', randomTheme[1]);
+            root.style.setProperty('--color-3', randomTheme[2]);
+            root.style.setProperty('--color-4', randomTheme[3]);
+            root.style.setProperty('--color-5', randomTheme[4]);
+
+            // 更新渐变背景
+            document.querySelectorAll('.page').forEach(page => {
+                if (page.id === 'home') {
+                    page.style.setProperty('--gradient-overlay', `linear-gradient(45deg, 
+                        ${randomTheme[0]}bb, 
+                        ${randomTheme[1]}bb, 
+                        ${randomTheme[2]}bb)`);
+                }
+            });
+
+            // 更新文字渐变
+            document.querySelectorAll('.welcome-text, .section-title').forEach(element => {
+                element.style.background = `linear-gradient(45deg, 
+                    ${randomTheme[0]}, 
+                    ${randomTheme[1]}, 
+                    ${randomTheme[2]})`;
+                element.style.webkitBackgroundClip = 'text';
+                element.style.webkitTextFillColor = 'transparent';
+            });
+        }
+
+        // 页面加载完成后初始化主题
+        document.addEventListener('DOMContentLoaded', initRandomTheme);
+
+        // 原有的滚动监听代码
+        const pages = document.querySelectorAll('.page');
+        const observerOptions = {
+            root: null,
+            threshold: 0.5,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                } else {
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, observerOptions);
+
+        pages.forEach(page => {
+            observer.observe(page);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="#home" class="logo">孙晓鹏</a>
+    <div class="logo-subtitle">一个梦想成为游戏设计师的小萌新</div>
+    <nav class="nav">
+        <a href="#portfolio" class="nav-link">作品集</a>
+        <a href="#about" class="nav-link">了解我</a>
+    </nav>
+
+    <section id="home" class="page">
+        <div class="home-content">
+            <h1 class="welcome-text">创意无限<br>设计无界</h1>
+        </div>
+    </section>
+
+    <section id="portfolio" class="page">
+        <h2 class="section-title">精选作品</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="./image/111.jpg" alt="3D产品设计">
+                <div class="portfolio-content">
+                    <h3>3D产品设计</h3>
+                    <p>模型与场景概念图</p>
+                </div>
+            </div>
+            <div class="portfolio-item has-video">
+                <video src="./video/222.mp4" controls muted loop playsinline poster="./video/poster.jpg">
+                    您的浏览器不支持视频播放。
+                </video>
+                <div class="portfolio-content">
+                    <h3>动态海报设计</h3>
+                    <p>产品介绍与特效动画演示</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="./image/333.png" alt="游戏UI界面">
+                <div class="portfolio-content">
+                    <h3>游戏UI界面</h3>
+                    <p>科技感十足的游戏界面设计</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="./image/444.png" alt="游戏场景设计">
+                <div class="portfolio-content">
+                    <h3>用户需求调研</h3>
+                    <p>独特创意与贴近用户实情</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="./image/555.png" alt="游戏道具设计">
+                <div class="portfolio-content">
+                    <h3>代码编程学习</h3>
+                    <p>脚踏实地与挑战未知领域</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="./image/666.png" alt="应用UI设计">
+                <div class="portfolio-content">
+                    <h3>应用UI设计</h3>
+                    <p>独特风格与美观的界面设计</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page">
+        <div class="about-content">
+            <h2 class="section-title">关于我</h2>
+            <p class="about-text">我是一名热爱游戏设计的大学生，对3D建模和动画充满热情。从小就被游戏的魔力所吸引，立志成为一名优秀的游戏设计师。在校期间，我积极参与各类游戏设计项目和比赛，不断提升自己的专业技能。我深信游戏不仅是娱乐，更是连接人与人的桥梁，能够传递情感和价值。我的目标是：用创意打造有趣的游戏体验，让玩家感受到快乐与惊喜。</p>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <i class="fas fa-cube skill-icon"></i>
+                    <h3>3D建模</h3>
+                    <p>Maya、3ds Max、ZBrush</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-film skill-icon"></i>
+                    <h3>动画制作</h3>
+                    <p>角色动画与特效设计</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-gamepad skill-icon"></i>
+                    <h3>游戏引擎</h3>
+                    <p>Unity、Unreal Engine</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-pencil-alt skill-icon"></i>
+                    <h3>概念设计</h3>
+                    <p>角色与场景概念图</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <p>邮箱：<a href="mailto:1607833083@qq.com">1607833083@qq.com</a></p>
+        <p>手机号：<span class="footer-phone">13701473299</span></p>
+    </footer>
+</body>
+</html>
